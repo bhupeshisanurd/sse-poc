@@ -1,0 +1,59 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Debug and dev binariies
+__debug_bin
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+*.html
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# Logs
+*.log
+
+# VS Code files
+.vscode/*
+.history/
+*.code-workspace
+
+# IDE files
+.idea
+.vscode
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Terraform cache
+.terraform/
+
+# Terraform lock
+.terraform.lock.hcl
+
+# Terraform plan
+*.tfplan
+
+# Credentials
+.env
+
+# Ignore any ZIP archives
+*.zip
+
+# Ignore anything in these directories except "main.go"
+client/client
+server/server
