@@ -15,7 +15,9 @@ var once sync.Once
 
 func Init() {
 	once.Do(func() {
-		singleton.sseServer = sse.New()
+		server := sse.New()
+		server.AutoReplay = false
+		singleton.sseServer = server
 	})
 }
 

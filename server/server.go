@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"sse-poc/instance"
 	"strings"
@@ -15,10 +16,8 @@ func logHTTPRequest(w http.ResponseWriter, r *http.Request) {
 	if _, err := io.Copy(buf, r.Body); err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	method := r.Method
 
-	logMsg := fmt.Sprintf("Method: %v, Body: %v", method, buf.String())
-	fmt.Println(logMsg)
+	log.Printf("Got trigger request with Data: %v", buf.String())
 
 	server := instance.SSEServer()
 	server.Publish("messages", &sse.Event{
@@ -28,15 +27,20 @@ func logHTTPRequest(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	instance.Init()
-
 	server := instance.SSEServer()
 
 	server.CreateStream("messages")
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/events", server.ServeHTTP)
-	mux.HandleFunc("/push", logHTTPRequest)
+	mux.HandleFunc("/trigger", logHTTPRequest)
 
-	http.ListenAndServe(":8080", mux)
+	addr := ":8080"
+	log.Println("Starting server on", addr)
+
+	err := http.ListenAndServe(addr, mux)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
