@@ -17,6 +17,9 @@ func Init() {
 	once.Do(func() {
 		server := sse.New()
 		server.AutoReplay = false
+		server.Headers = map[string]string{
+			"Access-Control-Allow-Origin": "*",
+		}
 		singleton.sseServer = server
 	})
 }
