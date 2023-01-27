@@ -19,11 +19,11 @@ Purpose of this repository is to understand the usage of Server Side Events usin
    go run client/client.go
    ```
 
-   Or open the `index.html` file in a browser.
+   **Or open the `index.html` file in a browser and click on `Trigger Event` button.**
 
 3. Once the server is up, and you have a client running, send a trigger to `/trigger` endpoint
    ```bash
-   curl -X POST -d "Some Data" localhost:8080/trigger
+   curl -i localhost:8080/trigger
    ```
 
 4. The client will show the data that was emitted from server. Any other client can connect on the following url
