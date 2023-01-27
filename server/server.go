@@ -1,28 +1,28 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"sse-poc/instance"
-	"strings"
+	"time"
 
 	"github.com/r3labs/sse/v2"
 )
 
 func logHTTPRequest(w http.ResponseWriter, r *http.Request) {
-	buf := new(strings.Builder)
-	if _, err := io.Copy(buf, r.Body); err != nil {
-		fmt.Printf("Error: %v", err)
-	}
+	// buf := new(strings.Builder)
+	// if _, err := io.Copy(buf, r.Body); err != nil {
+	// 	fmt.Printf("Error: %v", err)
+	// }
 
-	log.Printf("Got trigger request with Data: %v", buf.String())
+	log.Printf("Got trigger request. Sending SSE")
 
 	server := instance.SSEServer()
 	server.Publish("messages", &sse.Event{
-		Data: []byte(buf.String()),
+		Data: []byte(time.Now().String()),
 	})
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(200)
 }
 
 func main() {
